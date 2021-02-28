@@ -12,9 +12,6 @@ schema.statics = {//objeto json que permite definir varias funciones
     getAll: function (query, cb){ 
         this.find(query, cb); 
     },
-    getByCode: function (query, cb){ 
-        this.find(query, cb); 
-    },
     update: function (query, data, cb){ //data sirve para actualizar la info 
         this.findOneAndUpdate(query, {$set: data}, {new: true}, cb); 
     }, 

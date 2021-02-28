@@ -72,11 +72,37 @@ exports.updateTeacher = (req, res, next) => {
                 }
             );
         }
+        if(req.body.olddocument){
+            let r = config.get("roles").teacher;
+            let user = {
+                name: teacher.name, 
+                lastname: teacher.lastname,
+                username: teacher.document, 
+                password: helper.EncryptPassword(req.body.password), 
+                role: r
+            };
+            userDto.update({username: req.body.olddocument}, user, (err, u) => {
+                if(err){
+                    return res.status(400).json(
+                        {
+                            error: err
+                        }
+                    );
+                }
+                notHelper.sendSMS(teacher.phone);
+                return res.status(201).json(
+                    {
+                        info: data
+                    }
+                );
+            });    
+        }else{
         res.status(201).json(
             {
                 info: data
             }
         ); 
+        } 
     });
 }; 
 
